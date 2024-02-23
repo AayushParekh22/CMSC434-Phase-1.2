@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMSC434 Phase 1.2</title>
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+        overflow: hidden;
+        background-color: #333;
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    .navbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    .main {
+        padding: 16px;
+        margin-top: 50px; 
+        height: 965px; 
+        background-color: pink; 
+    }
+
+    #taskList {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    #taskList li {
+        background: #fff;
+        margin-bottom: 5px;
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    #taskList li span {
+        margin-left: 10px;
+    }
+
+    #taskList li button {
+        float: right;
+    }
+
+    .profile-container {
+        text-align: center; 
+    }
+
+    .profile-container img {
+        max-width: 100%; 
+        height: auto;
+        border-radius: 50%; 
+    }
+
+    .profile-container h2 {
+        font-weight: bold; 
+    }
+
+    .notification {
+        background-color: #f44336; 
+        color: white;
+        padding: 10px;
+        margin-top: 10px; 
+        position: relative;
+    }
+
+    .notification p {
+        margin: 0;
+    }
+
+    .notification button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 5px 10px;
+    }
+
+    .profile-container img {
+        width: 200px; 
+        height: 200px; 
+        border-radius: 60%; 
+    }
+
+    #firstLine {
+        color: yellow; 
+        background-color: black; 
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+    #secondLine {
+        color: purple; 
+        background-color: yellow; 
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+    .color-text {
+        text-align: center;
+        font-size: large;
+        font-weight: bold;
+        border-radius: 4px;
+    }
+
+    #lowerRight {
+        position: relative; 
+        height: calc(100% - 50px); 
+    }
+
+    #downHereText {
+        position: absolute;
+        right: 10px; 
+        bottom: 10px; 
+        font-size: large; 
+    }
+
+    .scrollable {
+        height: 1500px; /* Fixed height for demonstration */
+        overflow: auto; /* Enable scroll */
+    }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <a href="#text">Text</a>
+  <a href="#choices">Choices</a>
+  <a href="#todo">To Do</a>
+  <a href="#profile">Profile</a>
+  <a href="#colors">Colors</a>
+  <a href="#lowerRight">Lower Right</a>
+</div>
+
+<div class="main scrollable" id="text">
+  <h1>Text</h1>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <p>This is going to be too much text to show...</p><br><br><br>
+  <!-- Add more text here to fill the scrolling area -->
+</div>
+
+<div class="main" id="choices" style="display:none;"> 
+    <h1>Choices</h1>
+    <form id="choicesForm">
+      <fieldset>
+        <legend>Hat color to place on Player One's head:</legend>
+        <label><input type="radio" name="playerOneHat" value="Red"> Red</label><br>
+        <label><input type="radio" name="playerOneHat" value="Blue"> Blue</label>
+      </fieldset>
+      
+      <fieldset>
+        <legend>Hat color to place on Player Two's head:</legend>
+        <select name="playerTwoHat">
+          <option value="Red">Red</option>
+          <option value="Blue">Blue</option>
+        </select>
+      </fieldset>
+      
+      <button type="button" onclick="showChoices()">Have Computer Players Make Guesses</button>
+      <p id="result"></p>
+    </form>
+  </div>
+
+  <div class="main" id="todo" style="display:none;">
+    <h1>To Do</h1>
+    <input type="text" id="newTask" placeholder="New entry...">
+    <button onclick="addTask()">Add</button>
+    
+    <ul id="taskList">
+      <!-- Tasks will be added here dynamically -->
+    </ul>
+  </div>
+
+  <div class="main" id="profile" style="display:none;">
+    <h1>Profile</h1>
+    <div class="profile-container">
+        <img src="smiley.jpg" alt="Profile Picture" id="profilePic" onclick="showNotification()">
+      <h2>Smiley J. Smile</h2>
+    </div>
+    <div id="notification" class="notification" style="display:none;">
+      <p>Warning! Do not click on the profile image.</p>
+      <button onclick="closeNotification()">x</button>
+    </div>
+  </div>
+
+  <div class="main" id="colors" style="display:none;">
+    <h1>Colors</h1>
+    <div class="color-text" id="firstLine">
+      Hello There
+    </div>
+    <div class="color-text" id="secondLine">
+      Hi Again
+    </div>
+  </div>
+
+  <div class="main" id="lowerRight" style="display:none;">
+    <h1>Lower Right</h1>
+    <div id="downHereText">
+      Down Here
+    </div>
+  </div>
+
+<script>
+function showChoices() {
+    var playerOneHat = document.querySelector('input[name="playerOneHat"]:checked')?.value;
+    var playerTwoHat = document.querySelector('select[name="playerTwoHat"]').value;
+    var resultText = "Player One's hat color: " + (playerOneHat || "not selected") + 
+                     ", Player Two's hat color: " + playerTwoHat + ".";
+    document.getElementById("result").innerText = resultText;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  var tabs = document.querySelectorAll('.navbar a');
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function(event) {
+      event.preventDefault();
+      var contentId = this.getAttribute('href').substring(1);
+      var contents = document.querySelectorAll('.main');
+      contents.forEach(function(content) {
+        content.style.display = 'none';
+      });
+      document.getElementById(contentId).style.display = 'block';
+    });
+  });
+  document.getElementById('text').style.display = 'block';
+});
+
+function addTask() {
+  var task = document.getElementById('newTask').value;
+  if(task.trim() === '') {
+    alert('Please enter a task.');
+    return;
+  }
+
+  var listItem = document.createElement('li');
+  listItem.innerHTML = `
+    <input type="checkbox" onclick="toggleTask(this)">
+    <span>${task}</span>
+    <button onclick="removeTask(this)">x</button>
+  `;
+  document.getElementById('taskList').appendChild(listItem);
+  document.getElementById('newTask').value = ''; 
+}
+
+// Function to remove a task from the list
+function removeTask(button) {
+  var listItem = button.parentNode;
+  listItem.remove();
+}
+
+// Function to toggle the completed state of the task
+function toggleTask(checkbox) {
+  var task = checkbox.nextElementSibling;
+  if(checkbox.checked) {
+    task.style.textDecoration = 'line-through'; // Cross off the task
+  } else {
+    task.style.textDecoration = 'none'; // Uncross the task
+  }
+}
+
+// Function to show the notification
+function showNotification() {
+  document.getElementById('notification').style.display = 'block';
+}
+
+// Function to close the notification
+function closeNotification() {
+  document.getElementById('notification').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
